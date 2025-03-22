@@ -1,24 +1,25 @@
 const express = require("express");
 // const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const audioRoutes = require("./routes/audio");
-// const connectToDb = require("./db/index");
-const mongoDBURL =
-  process.env.MONGODB_URL ||
-  "mongodb+srv://ravi:ravi@cluster0.alaj6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const connectToDb = require("./db/index");
+// const mongoDBURL = process.env.MONGODB_URL;
 
 const app = express();
 
-// connectToDb();
-mongoose
-  .connect(mongoDBURL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    dbName: "itube",
-  })
-  .then(() => console.log("Connection Successful"))
-  .catch((err) => console.error("Connection Error:", err));
+connectToDb();
+// mongoose
+//   .connect(mongoDBURL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     dbName: "itube",
+//   })
+//   .then(() => console.log("Connection Successful"))
+//   .catch((err) => console.error("Connection Error:", err));
 
 // body-parser middleware
 // app.use(bodyParser.urlencoded({ extended: false }));
