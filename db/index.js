@@ -7,6 +7,7 @@ const connectToDb = () => {
     .connect(mongoDBURL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      dbName: "itube",
     })
     .then(() => console.log("Connection Successful"))
     .catch((err) => console.error("Connection Error:", err));
