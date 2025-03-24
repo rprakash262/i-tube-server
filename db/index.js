@@ -9,8 +9,8 @@ const connectToDb = () => {
       useUnifiedTopology: true,
       dbName: "itube",
     })
-    .then(() => console.log("Connection Successful"))
-    .catch((err) => console.error("Connection Error:", err));
+    .then(() => console.log("Database Connection Successful"))
+    .catch((err) => console.error("Database Connection Error:", err));
 };
 
 module.exports = connectToDb;
