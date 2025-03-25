@@ -8,6 +8,7 @@ const industryRoutes = require("./routes/industry");
 const genreRoutes = require("./routes/genre");
 const singerRoutes = require("./routes/singer");
 const audioRoutes = require("./routes/audio");
+const playlistRoutes = require("./routes/playlist");
 
 const app = express();
 
@@ -30,5 +31,6 @@ app.use("/industry", industryRoutes);
 app.use("/genre", genreRoutes);
 app.use("/singer", singerRoutes);
 app.use("/audio", audioRoutes);
+app.use("/playlist", playlistRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

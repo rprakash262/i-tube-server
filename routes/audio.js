@@ -61,6 +61,29 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get(`/:audioId`, async (req, res) => {
+  try {
+    const audio = await Audio.findById(req.params.audioId);
+
+    const data = {
+      id: audio._id,
+      title: audio.title,
+      description: audio.description,
+      url: audio.url,
+      visits: audio.visits,
+      thumbnail: audio.thumbnail,
+      tags: audio.tags,
+      genre: audio.genre,
+      singer: audio.singer,
+    };
+
+    res.json({ data }).status(200);
+  } catch (error) {
+    console.log(error);
+    res.json({ error: "Something went wrong" }).status(500);
+  }
+});
+
 router.post("/", async (req, res) => {
   const data = req.body;
   const newAudio = new Audio(data);

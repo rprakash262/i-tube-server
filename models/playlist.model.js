@@ -5,6 +5,15 @@ const playlistSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    default: "",
+  },
+  thumbnail: {
+    type: String,
+    default:
+      "https://jdnnhpkgrugqtpwfozux.supabase.co/storage/v1/object/public/itube/thumbnails/360_F_320567729_aIbFC4DPHx56oEx1ZtqubZx9o3v5Ldfl.jpg",
+  },
   audios: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -14,6 +23,11 @@ const playlistSchema = mongoose.Schema({
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    default: null,
+  },
+  tags: {
+    type: [String],
+    default: [],
   },
 });
 
