@@ -18,6 +18,33 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/ids", async (req, res) => {
+  const { ids } = req.body;
+
+  try {
+    const resonse = await Singer.find({
+      _id: {
+        $in: ids,
+      },
+    });
+    
+    console.log(resonse);
+
+    const singers = resonse.map((singer) => ({
+      id: singer._id,
+      name: singer.name,
+      description: singer.description,
+      thumbnail: singer.thumbnail,
+      industry: singer.industry,
+    }));
+
+    res.json({ data: singers }).status(200);
+  } catch (error) {
+    console.log(error);
+    res.json({ error: "something went wrong." }).status(500);
+  }
+});
+
 router.get("/", async (req, res) => {
   try {
     let singers = await Singer.find();

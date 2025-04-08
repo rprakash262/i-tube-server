@@ -18,6 +18,29 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/ids", async (req, res) => {
+  const { ids } = req.body;
+
+  try {
+    const resonse = await Genre.find({
+      _id: {
+        $in: ids,
+      },
+    });
+
+    const genres = resonse.map((genre) => ({
+      id: genre._id,
+      title: genre.title,
+      description: genre.description,
+    }));
+
+    res.json({ data: genres }).status(200);
+  } catch (error) {
+    console.log(error);
+    res.json({ error: "something went wrong." }).status(500);
+  }
+});
+
 router.get("/", async (req, res) => {
   try {
     let genres = await Genre.find();

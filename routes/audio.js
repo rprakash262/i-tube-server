@@ -11,37 +11,6 @@ router.get("/", async (req, res) => {
   try {
     let audios = await Audio.find();
 
-    const singerIds = audios.map((audio) => audio.singer._id.toString());
-    const genreIds = audios.map((audio) => audio.genre._id.toString());
-
-    const uniqueSingerIds = singerIds.filter(
-      (id, index) => singerIds.indexOf(id) === index
-    );
-    const uniqueGenreIds = genreIds.filter(
-      (id, index) => genreIds.indexOf(id) === index
-    );
-
-    const singers = await Singer.find({
-      _id: {
-        $in: uniqueSingerIds,
-      },
-    });
-    const genres = await Genre.find({
-      _id: {
-        $in: uniqueGenreIds,
-      },
-    });
-
-    const singersObject = {};
-    const genreObject = {};
-
-    singers.forEach((singer) => {
-      singersObject[singer._id] = singer.name;
-    });
-    genres.forEach((genre) => {
-      genreObject[genre._id] = genre.title;
-    });
-
     audios = audios.map((audio) => ({
       id: audio._id.toString(),
       title: audio.title,
@@ -50,8 +19,8 @@ router.get("/", async (req, res) => {
       visits: audio.visits,
       thumbnail: audio.thumbnail,
       tags: audio.tags,
-      genre: genreObject[audio.genre.toString()],
-      singer: singersObject[audio.singer.toString()],
+      genre: audio.genre,
+      singer: audio.singer,
     }));
 
     res.json({ data: audios }).status(200);
@@ -96,6 +65,19 @@ router.post("/", async (req, res) => {
     res.json({ error: "Something went wrong." }).status(500);
   }
 });
+
+router.put("/:audioId", async (req, res) => {
+  const data = req.body;
+
+  try {
+    const response = await Audio.findByIdAndUpdate(req.params.audioId, data);
+    res.json({ data: response }).status(200);
+  } catch (error) {
+    console.log(error);
+    res.json({ error: "Something went wrong." }).status(500);
+  }
+});
+
 
 router.patch("/", (req, res) => {
   const data = req.body;
