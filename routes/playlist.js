@@ -75,11 +75,9 @@ router.put("/", async (req, res) => {
   const data = req.body;
 
   const { id, ...rest } = data;
-  console.log(data);
 
   try {
     const newPlaylist = await Playlist.findOneAndUpdate({ _id: id }, rest);
-    console.log(newPlaylist);
     res.json({ data: newPlaylist }).status(200);
   } catch (error) {
     console.log(error);

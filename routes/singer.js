@@ -28,8 +28,6 @@ router.post("/ids", async (req, res) => {
       },
     });
     
-    console.log(resonse);
-
     const singers = resonse.map((singer) => ({
       id: singer._id,
       name: singer.name,
